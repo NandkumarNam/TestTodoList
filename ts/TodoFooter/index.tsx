@@ -1,31 +1,30 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import React, { useState } from "react";
 
 const TodoFooter = (props) => {
-    const {count} = props;
+    const {count, sortTodoList, clearCompletedTodo} = props;
+    const [filterType, setFilterType] = useState('all');
 
-    const findPathName = () => {
-       console.log(window.location);
+    const findPathName = (val) => {
+        sortTodoList(val);
+        setFilterType(val);
     }
 
     return (
         <footer className="footer">
             <span className="todo-count"><strong>{count}</strong> item left</span>
-            <Router>
                 <ul className="filters">
                     <li>
-                        <a className="selected" href="#/" onClick={findPathName}>All</a>
+                        <a className={filterType === "all" ? "selected" : ""} href="#/" onClick={() => findPathName("all")}>All</a>
                     </li>
                     <li>
-                        <a href="#/active" onClick={findPathName}>Active</a>
+                        <a className={filterType === "active" ? "selected" : ""} href="#/active" onClick={() => findPathName("active")}>Active</a>
                     </li>
                     <li>
-                        <a href="#/completed" onClick={findPathName}>Completed</a>
+                        <a className={filterType === "completed" ? "selected" : ""} href="#/completed" onClick={() => findPathName("completed")}>Completed</a>
                     </li>
                 </ul>
-            </Router>
             
-            <button className="clear-completed">Clear completed</button>
+            <button className="clear-completed" onClick={clearCompletedTodo}>Clear completed</button>
         </footer>
     )
 }
