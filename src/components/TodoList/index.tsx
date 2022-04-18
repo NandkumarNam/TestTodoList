@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import {useEffect, useState} from "react";
+import {TodoListDetails} from '../interfaces';
 
-const TodoList = (props) => {
+const TodoList = (props:any) => {
 	const {todoItems, removeTodoItem, markTodoDone, onEdit, onBlur, editText, toggleAll} = props;
 	const [fieldValue, setFieldValue] = useState("");
 
@@ -8,19 +10,19 @@ const TodoList = (props) => {
         setFieldValue(editText);
     }, [editText]);
 	
-	const handleEdit = (e, idx) => {
+	const handleEdit = (e:object, idx:number) => {
 		onEdit(idx);
 	}
 
-	const handleSubmit = (e, idx) => {
+	const handleSubmit = (e:object, idx:number) => {
 		onBlur(idx, fieldValue);
 	}
 
 	const renderTodoList = () => {
 		return (
-			todoItems.map((item, idx) => {
+			todoItems.map((item:TodoListDetails, idx:number) => {
 				return (
-					<li className={item.styleClass} key={item.index}>
+					<li className={item?.styleClass} key={item?.index}>
 						<div className="view">
 							<input className="toggle" onClick={() => markTodoDone(idx)} type="checkbox" checked={item.done ? true : false} />
 							<label onDoubleClick={ e => handleEdit(e, item.index) }>{item.value}</label>

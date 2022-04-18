@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import {useState, useEffect} from "react";
 import TodoHeader from "../TodoHeader";
 import TodoList from "../TodoList";
 import TodoFooter from "../TodoFooter";
@@ -25,7 +26,7 @@ const TodoApp = () => {
         setActiveItemCount(count);
     }
 
-    const addItem = (todoItem) => {
+    const addItem = (todoItem:any) => {
         let tempObj = {
             index: todoList.length + 1,
             value: todoItem,
@@ -36,7 +37,7 @@ const TodoApp = () => {
         setBackUpTodoList([...todoList, tempObj]);
     }
 
-    const markTodoDone = (itemIdx) => {
+    const markTodoDone = (itemIdx:number) => {
         const updateList = [...todoList];
         updateList[itemIdx].done = !updateList[itemIdx].done;
         updateList[itemIdx].styleClass = "completed";
@@ -45,14 +46,14 @@ const TodoApp = () => {
         setBackUpTodoList(updateList);
     }
 
-    const removeTodoItem = (itemIdx) => {
+    const removeTodoItem = (itemIdx:number) => {
         const updateList = [...todoList];
         updateList.splice(itemIdx, 1);
         setTodoList(updateList);
         setBackUpTodoList(updateList);
     }
 
-    const filterTodoList = (filterType) => {
+    const filterTodoList = (filterType:string) => {
         let updateList = [...backUpTodoList];
 
         switch(filterType){
@@ -76,7 +77,7 @@ const TodoApp = () => {
         setBackUpTodoList(updateList);
     }
 
-    const onEdit = (idx) => {
+    const onEdit = (idx:number) => {
         let updateList = [...backUpTodoList];
         updateList = updateList.map((item) => {
             if(item.index === idx){
@@ -90,7 +91,7 @@ const TodoApp = () => {
         setBackUpTodoList(updateList);
     }
 
-    const onBlur = (idx, newVal) => {
+    const onBlur = (idx:number, newVal:string) => {
         let updateList = [...backUpTodoList];
         updateList = updateList.map((item) => {
             if(item.index === idx){

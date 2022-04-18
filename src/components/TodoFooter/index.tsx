@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import * as React from "react";
+import {useState} from "react";
 
-const TodoFooter = (props) => {
+const TodoFooter = (props:any) => {
     const {count, sortTodoList, clearCompletedTodo} = props;
     const [filterType, setFilterType] = useState('all');
 
-    const findPathName = (val) => {
+    const findPathName = (val:string) => {
         sortTodoList(val);
         setFilterType(val);
     }

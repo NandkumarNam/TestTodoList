@@ -1,11 +1,12 @@
-import React, {useRef} from "react";
+import * as React from "react";
+import {useRef} from "react";
 
-const TodoHeader = (props) => {
+const TodoHeader = (props:any) => {
     const {addItem} = props;
     const form = useRef(null);
     const inputField = useRef(null);
 
-    const onSubmit = (evt) => {
+    const onSubmit = (evt:any) => {
         evt.preventDefault();
         var todoItem = inputField.current.value;
 
