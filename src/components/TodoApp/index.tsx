@@ -7,8 +7,8 @@ import {filterArray, resetTodoListStatus} from '../utils/utils';
 import "./todoStyle.css"
 
 const completeTodoList = [
-    { index: 1, value: "learn react", done: false, styleClass:"" },
-    { index: 2, value: "Go shopping", done: true, styleClass:"completed" }
+    { index: 1, value: "learn react", done: false, styleClass:"", destroy:"" },
+    { index: 2, value: "Go shopping", done: true, styleClass:"completed", destroy:"" }
 ]
 const TodoApp = () => {
     const [todoList, setTodoList] = useState(completeTodoList);
@@ -16,6 +16,7 @@ const TodoApp = () => {
     const [editText, setEditText] = useState("");
     const [activeItemCount, setActiveItemCount] = useState(0);
     const [filterStatus, setFilterStatus] = useState(false);
+    const [showClearComp, setShowClearComp] = useState(false);
 
     useEffect(() => {
         countActiveTodoItem();
@@ -31,7 +32,8 @@ const TodoApp = () => {
             index: todoList.length + 1,
             value: todoItem,
             done: false,
-            styleClass: ""
+            styleClass: "",
+            destroy:""
         };
         setTodoList([...todoList, tempObj])
         setBackUpTodoList([...todoList, tempObj]);
@@ -66,13 +68,17 @@ const TodoApp = () => {
                 updateList = filterArray(updateList, true);
                 break;
         }
-
+        let result = [updateList.find(element => element.done === true)];
+        let status = result.length > 0 && result[0] !== undefined;
+        setShowClearComp(status);
         setTodoList(updateList);
     }
 
     const clearCompletedTodo = () => {
         let updateList = [...backUpTodoList];
         updateList = filterArray(updateList, false);
+
+        setShowClearComp(false);
         setTodoList(updateList);
         setBackUpTodoList(updateList);
     }
@@ -113,6 +119,19 @@ const TodoApp = () => {
         setBackUpTodoList(updateList);
     }
 
+    const addDeleteIcon = (flag:boolean, idx:number) => {
+        let updateList = [...backUpTodoList];
+        updateList = updateList.map((item) => {
+            if(item.index === idx){
+                item.destroy = flag ? "x" : "";
+            }
+            return item;
+        })
+
+        setTodoList(updateList);
+        setBackUpTodoList(updateList);
+    }
+
     return (
         <div className="todo-app">
             <TodoHeader addItem={addItem} />
@@ -123,11 +142,13 @@ const TodoApp = () => {
                 onEdit={onEdit}
                 onBlur={onBlur}
                 editText={editText}
-                toggleAll={toggleAll}/>
+                toggleAll={toggleAll}
+                addDeleteIcon={addDeleteIcon}/>
             <TodoFooter 
                 count={activeItemCount}
                 sortTodoList={filterTodoList}
-                clearCompletedTodo={clearCompletedTodo}/>
+                clearCompletedTodo={clearCompletedTodo}
+                showClearBtn={showClearComp}/>
         </div>
     )
 }

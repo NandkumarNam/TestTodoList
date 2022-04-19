@@ -169,7 +169,7 @@ button {
 }
 
 .todo-list li .destroy {
-    display: none;
+    display: block;
     position: absolute;
     top: 0;
     right: 10px;
@@ -180,6 +180,7 @@ button {
     font-size: 30px;
     color: #949494;
     transition: color 0.2s ease-out;
+    cursor: pointer;
 }
 
 .todo-list li .edit {
